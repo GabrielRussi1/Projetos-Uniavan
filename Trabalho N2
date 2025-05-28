@@ -1,0 +1,71 @@
+/* 
+Trabalho de Linguagem C - N2 (Peso 3)
+Simulação de um dia de vendas em uma loja
+
+Aluno: Gabriel Russi
+Professor: Alessandro João Brassanini
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+// Definindo os limites máximos
+#define LIMITE_PRODUTOS 200
+#define LIMITE_CLIENTES 50
+
+// Função auxiliar que gera números aleatórios de 0 até (n-1)
+int gerarAleatorio(int n) {
+    return rand() % n;
+}
+
+int main() {
+    // Declarando as variáveis principais
+    int totalProdutos, totalClientes;
+    float precos[LIMITE_PRODUTOS];    // Vetor com preços dos produtos
+    int compras[LIMITE_CLIENTES];     // Vetor que armazena qual produto cada cliente comprou
+    float totalVendas = 0;            // Soma do valor total vendido no dia
+
+    // Inicializa o gerador de números aleatórios
+    srand(time(NULL));
+
+    // Gerando a quantidade de produtos disponíveis no dia (1 até 200)
+    totalProdutos = gerarAleatorio(LIMITE_PRODUTOS) + 1;
+
+    // Preenchendo o vetor de preços dos produtos
+    for (int i = 0; i < totalProdutos; i++) {
+        // Preços entre R$5,00 e R$100,00
+        precos[i] = 5 + gerarAleatorio(96); 
+    }
+
+    // Gerando a quantidade de clientes do dia (1 até 50)
+    totalClientes = gerarAleatorio(LIMITE_CLIENTES) + 1;
+
+    // Impressão do resumo inicial
+    printf("===========================================\n");
+    printf("SIMULACAO DE VENDAS - LOJA GABRIEL RUSSI\n");
+    printf("Produtos disponiveis: %d\n", totalProdutos);
+    printf("Clientes no dia: %d\n", totalClientes);
+    printf("===========================================\n");
+    printf(" Cliente | Produto | Preco (R$) \n");
+    printf("-------------------------------------------\n");
+
+    // Simulando as compras dos clientes
+    for (int i = 0; i < totalClientes; i++) {
+        compras[i] = gerarAleatorio(totalProdutos);  // Cliente escolhe um produto
+
+        // Mostrando na tela a compra realizada
+        printf(" %7d | %7d | %9.2f\n", 
+               i + 1, compras[i] + 1, precos[compras[i]]);
+
+        // Somando ao total de vendas
+        totalVendas += precos[compras[i]];
+    }
+
+    // Impressão do total de vendas do dia
+    printf("-------------------------------------------\n");
+    printf("TOTAL DE VENDAS NO DIA: R$ %.2f\n", totalVendas);
+    printf("===========================================\n");
+
+    return 0;
+}
